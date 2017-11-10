@@ -1,0 +1,140 @@
+/**
+ * Set up a decent box model on the root element
+ */
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700");
+html {
+  box-sizing: border-box; }
+
+body {
+  font-family: "Source Sans Pro", sans-serif;
+  color: #262626; }
+
+/**
+ * Make all elements from the DOM inherit from the parent box-sizing
+ * Since `*` has a specificity of 0, it does not override the `html` value
+ * making all elements inheriting from the root box-sizing value
+ * See: https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
+ */
+/**
+ * Basic styles for links
+ */
+a {
+  color: #54b0d6;
+  text-decoration: none; }
+  a:hover, a:active, a:focus {
+    color: #262626;
+    text-decoration: underline; }
+
+/**
+ * Clear inner floats
+ */
+.clearfix::after {
+  clear: both;
+  content: '';
+  display: table; }
+
+/**
+ * Main content containers
+ * 1. Make the container full-width with a maximum width
+ * 2. Center it in the viewport
+ * 3. Leave some space on the edges, especially valuable on small screens
+ */
+/**
+ * Hide text while making it readable for screen readers
+ * 1. Needed in WebKit-based browsers because of an implementation bug;
+ *    See: https://code.google.com/p/chromium/issues/detail?id=457146
+ */
+.hide-text {
+  overflow: hidden;
+  padding: 0;
+  /* 1 */
+  text-indent: 101%;
+  white-space: nowrap; }
+
+/**
+ * Hide element while making it readable for screen readers
+ * Shamelessly borrowed from HTML5Boilerplate:
+ * https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css#L119-L133
+ */
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px; }
+
+.full-wd {
+  width: 100%; }
+
+.alert-debug {
+  background-color: #fff;
+  border-color: #d6e9c6;
+  color: #000; }
+
+.alert-error {
+  background-color: #f2dede;
+  border-color: #eed3d7;
+  color: #b94a48; }
+
+[hidden][style="display: block;"] {
+  display: block !important; }
+
+.xs-space {
+  padding: 15px 0; }
+
+.navbar {
+  border-radius: 0px;
+  background-color: #fff; }
+  .navbar .navbar-brand {
+    font-weight: 600;
+    color: #262626; }
+  .navbar .navbar-nav > .nav-item > .nav-link {
+    color: #262626; }
+    .navbar .navbar-nav > .nav-item > .nav-link:hover {
+      color: #54b0d6; }
+  .navbar .navbar-nav > .nav-item.active a {
+    color: #54b0d6; }
+  .navbar .navbar-toggler {
+    border: 1px solid #262626; }
+    .navbar .navbar-toggler .navbar-toggler-icon {
+      color: #262626; }
+
+@media (max-width: 47.9em) {
+  .navbar-nav .nav-item {
+    display: inline-block;
+    float: none;
+    width: 100%; }
+  .navbar-nav .nav-item + .nav-item {
+    margin-left: 0; }
+  .nav.navbar-nav.pull-xs-right {
+    float: none !important; } }
+
+.btn-primary {
+  background-color: #262626;
+  border: none;
+  color: #fff; }
+  .btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+    background-color: #54b0d6;
+    color: #fff; }
+
+.card {
+  box-shadow: 0 10px 40px 0 rgba(62, 57, 107, 0.07), 0 2px 9px 0 rgba(62, 57, 107, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  will-change: transform, box-shadow;
+  margin-bottom: 25px; }
+  .card:hover {
+    transform: translateY(-5px) translateZ(0);
+    box-shadow: 0 16px 32px 0 rgba(62, 57, 107, 0.28), 0 0 0 transparent; }
+
+@media (min-width: 768px) {
+  .card {
+    margin-bottom: 0; } }
+
+.sec-content {
+  padding: 40px 0; }
+  .sec-content .sec-content-title {
+    margin-bottom: 30px;
+    font-weight: 600; }

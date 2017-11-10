@@ -1,0 +1,64 @@
+// -----------------------------------------------------------------------------
+// This file contains all styles related to the header of the site/application.
+// -----------------------------------------------------------------------------
+
+////////////////////////////////
+    //Navbar//
+////////////////////////////////
+
+// This is a fix for the bootstrap4 alpha release
+
+.navbar {
+  border-radius: 0px;
+  background-color: $white;
+
+  .navbar-brand {
+    font-weight: 600;
+    color: $secondary-color;
+  }
+
+  .navbar-nav {
+    >.nav-item {
+      >.nav-link {
+        color: $secondary-color;
+
+        &:hover {
+          color: $primary-color;
+        }
+      }
+
+      &.active {
+        a {
+          color: $primary-color;
+        }
+
+      }
+    }
+  }
+
+  .navbar-toggler {
+    border: 1px solid $secondary-color;
+
+    .navbar-toggler-icon {
+      color: $secondary-color;
+    }
+  }
+}
+
+
+@media (max-width: 47.9em) {
+  .navbar-nav .nav-item {
+    display: inline-block;
+    float: none;
+    width: 100%;
+  }
+
+  .navbar-nav .nav-item + .nav-item {
+    margin-left: 0;
+  }
+
+  .nav.navbar-nav.pull-xs-right {
+    float: none !important;
+  }
+}
+

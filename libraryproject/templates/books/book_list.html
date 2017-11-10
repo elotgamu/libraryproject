@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+  <div class="container">
+    {% if books %}
+    <!-- the search -->
+    <div class="row">
+      <div class="col-sm-12">
+        <h2>Filtre su busqueda</h2>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12 col-md-6 col-md-offset-3">
+        <form action="." method="GET" type="get">
+
+          <div class="input-group">
+            <input class="form-control rounded-0 py-2" type="search" placeholder="Localice su libro" name="search-field">
+              <span class="input-group-btn">
+              <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-search"></i></button>
+            </span>
+          </div>
+
+          <div class="row">
+            <br><br>
+            <div class="btn-group full-wd" data-toggle="radio">
+              <div class="col-sm-6">
+                <div class="xs-space"></div>
+                <label for="book-filter">
+                  <input type="radio" name="filter-type" id="book-filter" value="1">&nbsp;Busco un libro en especifico
+                </label>
+
+              </div>
+
+              <div class="col-sm-6">
+                <div class="xs-space"></div>
+                <label for="author-book-filter">
+                  <input type="radio" name="filter-type" id="author-book-filter" value="2">&nbsp;Busco al autor, no al libro
+                </label>
+              </div>
+
+            </div>
+          </div>
+
+
+
+
+
+
+
+        </form>
+
+        <div class="xs-space"></div>
+      </div>
+
+    </div>
+    <!-- end the search form -->
+
+
+
+
+    <div class="row">
+      {% for book in books %}
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-block">
+              <h3 class="card-title">{{ book.name }}</h3>
+              <p class="card-text"><i class="fa fa-user"></i> {{ book.author }}</p>
+              <p class="card-text"><i class="fa fa-tag"></i> {{ book.genre }}</p>
+            </div>
+          </div>
+          <div class="xs-space"></div>
+        </div>
+
+      {% endfor %}
+
+    </div>
+
+    <!-- the paginate -->
+    <div class="row">
+      {% if is_paginated %}
+        <div class="col-sm-12 text-right">
+
+          <ul class="pagination">
+
+            <!-- the previous -->
+            {% if page_obj.has_previous %}
+              <li><span><a href="?page={{ page_obj.previous_page_number }}">Previous</a></span></li>
+            {% endif %}
+
+            <!-- end the previous -->
+            <li class="">
+              <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }} </span>
+            </li>
+
+            <!-- the next element if any -->
+            {% if page_obj.has_next %}
+              <li>
+                <span><a href="?page={{ page_obj.next_page_number }}">Next</a></span>
+              </li>
+            {% endif %}
+            <!-- end the next element -->
+        </ul>
+
+        </div>
+
+      {% endif %}
+    </div>
+    <!-- end the paginator -->
+
+
+
+    {% else %}
+      <h1>Lo sentimos, no disponemos de libros en nuestros estantes... </h1>
+    {% endif %}
+  </div>
+
+
+{% endblock content %}

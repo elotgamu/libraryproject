@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+  <div class="container">
+    {% if books %}
+    <div class="row">
+    {% for book in books %}
+
+      <div class="col-sm-4">
+        <div class="card">
+          <div class="card-block">
+            <h3>{{ book.name }}</h3>
+            <p>{{ book.author }}</p>
+          </div>
+        </div>
+      </div>
+
+    {% endfor %}
+    </div>
+
+  {% endif %}
+  </div>
+
+{% endblock content %}

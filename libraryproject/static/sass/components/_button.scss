@@ -1,0 +1,15 @@
+// -----------------------------------------------------------------------------
+// This file contains all styles related to the button component.
+// -----------------------------------------------------------------------------
+.btn-primary {
+  background-color: $secondary-color;
+  border: none;
+  color: $white;
+
+  @include on-event {
+    background-color: $primary-color;
+    color: $white;
+  }
+
+
+}

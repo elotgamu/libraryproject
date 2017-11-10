@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+  <div class="container">
+    {% if authors %}
+    <div class="row">
+      <div class="col-sm-12">
+        <h1>Autores disponibles:</h1>
+      </div>
+    </div>
+    <div class="row">
+      {% for author in authors %}
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-block">
+              <h3>{{ author.get_full_name }}</h3>
+              <a title="Ver obras" href="{% url 'books:per-author-books' author.id %}">Ver obras</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+  </div>
+
+{% endblock content %}

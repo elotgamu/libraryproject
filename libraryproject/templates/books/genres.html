@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+  <div class="container">
+    {% if genres %}
+    <div class="row">
+      <div class="col-sm-12">
+        <h1>Todos nuestros géneros</h1>
+      </div>
+    </div>
+    <div class="row">
+      {% for genre in genres  %}
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-block">
+              <h3>{{ genre.name }}</h3>
+              <a title="Ver títulos" href="{% url 'books:per-genre-books' genre.id %}">Ver títulos en esta categoría</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+  </div>
+
+{% endblock content %}

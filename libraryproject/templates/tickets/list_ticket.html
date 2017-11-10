@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+  <section class="ticket-list">
+    {% if ticket_list %}
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <h2>Tickets en proceso:</h2>
+          </div>
+        </div>
+
+        <div class="row">
+          {% for ticket in ticket_list  %}
+            <div class="col-sm-4">
+              <div class="card">
+                <h3>{{ ticket.pk }}</h3>
+
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+  </section>
+
+{% endblock content %}

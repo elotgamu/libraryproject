@@ -30,4 +30,8 @@ class DescriptionTicketForm(forms.ModelForm):
 
 
 TicketInlineForm = forms.inlineformset_factory(
-    Ticket, Ticket.books.through, fields=('book', 'quantity'), extra=1)
+    Ticket, TicketDescription,
+    form=DescriptionTicketForm,
+    fields=('book', 'quantity'),
+    extra=1, can_delete=True
+)

@@ -1,6 +1,7 @@
+# from django.shortcuts import redirect
 from django.views.generic.edit import CreateView, ModelFormMixin
 from django.views.generic import ListView
-
+from django.db import transaction
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.urls import reverse_lazy
@@ -15,7 +16,7 @@ class TicketCreate(LoginRequiredMixin, CreateView):
     model = Ticket
     form_class = TicketForm
     template_name = "tickets/new_ticket.html"
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('tickets:ticket-list')
 
     def get_context_data(self, **kwargs):
         context = super(TicketCreate, self).get_context_data(**kwargs)
@@ -30,40 +31,27 @@ class TicketCreate(LoginRequiredMixin, CreateView):
     def get_form_kwargs(self):
         kwargs = super(TicketCreate, self).get_form_kwargs()
         kwargs['request'] = self.request
-        print(self.request)
         return kwargs
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
-        super(TicketCreate, self).form_valid(form)
+        context = self.get_context_data()
+        inline_form = context['inline_form']
+
+        with transaction.atomic():
+            self.object = form.save()
+
+            if inline_form.is_valid():
+                inline_form.instance = self.object
+                inline_form.save()
+
+        return super(TicketCreate, self).form_valid(form)
 
 
-class TicketCreate1(LoginRequiredMixin, CreateView):
-    '''This class just show a multiselct with existing book,
-    doesnot help since we need to specify a quantity field '''
-
-    model = Ticket
-    # form_class = NewTicketForm
-    template_name = "tickets/new_ticket.html"
-    success_url = reverse_lazy('home')
-    fields = ('books',)
-
-    def form_valid(self, form):
-        user = self.request.user
-        form.instace.user = user
-
-        self.object = form.save(commit=True)
-
-        for book in form.cleaned_data['books']:
-            ticket_description = TicketDescription()
-            ticket_description.ticket = self.object
-            ticket_description.books = book
-            ticket_description.save()
-
-        super(ModelFormMixin, self).form_valid(form)
-
-
-class TicketList(ListView):
+class TicketList(LoginRequiredMixin, ListView):
     model = Ticket
     template_name = "tickets/list_ticket.html"
     context_object_name = 'ticket_list'
+
+    def get_queryset(self, **kwargs):
+        self.tickets = Ticket.objects.filter(user=self.request.user)
+        return self.tickets

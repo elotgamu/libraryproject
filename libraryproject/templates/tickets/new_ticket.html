@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -11,14 +12,33 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-12 col-md-6 col-md-offset-3">
+      <div class="col-sm-12 col-md-9 col-md-offset-3">
 
 
-        <form class="ticket-creation-form" method="POST">
+        <form id="ticket-creation-form" method="POST">
           {% csrf_token %}
           {{ form|crispy }}
 
-          {{ inline_form|crispy}}
+          {# {{ inline_form|crispy}} #}
+
+          <table class="table">
+
+            <tbody>
+              {% for form_element in inline_form.forms %}
+
+                <tr class="inline_form_row">
+                  {% for field in form_element.visible_fields %}
+                    <td>
+                      {{ field }}
+                    </td>
+                  {% endfor %}
+                </tr>
+
+              {% endfor %}
+            </tbody>
+
+          </table>
+          {{ inline_form.management_form|crispy }}
 
           {% if redirect_field_value %}
           <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
@@ -33,3 +53,21 @@
 </section>
 
 {% endblock content %}
+
+{% block javascript %}
+  {{ block.super }}
+
+  <!-- the js for the dynamic formset -->
+  <script type="text/javascript" src="{% static 'js/jquery.formset.js' %}"></script>
+
+  <script type="text/javascript">
+    $(function () {
+      $('.inline_form_row').formset({
+        addText: 'Agregar otro libro',
+        deleteText: 'Eliminar libro',
+        prefix: '{{ inline_form.prefix }}'
+      });
+    })
+  </script>
+
+{% endblock javascript %}

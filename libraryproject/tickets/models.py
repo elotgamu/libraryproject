@@ -43,3 +43,7 @@ class TicketDescription(models.Model):
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     quantity = models.IntegerField()
+
+    class Meta:
+        verbose_name = "Descripcion de la Ticket"
+        verbose_name_plural = "Descripciones de la ticket"

@@ -13,6 +13,10 @@ def define_librarian_group(sender, **kwargs):
         Permission.objects.get(codename='change_genre'),
         Permission.objects.get(codename='add_book'),
         Permission.objects.get(codename='change_book'),
+        Permission.objects.get(codename='add_ticket'),
+        Permission.objects.get(codename='change_ticket'),
+        Permission.objects.get(codename='add_ticketdescription'),
+        Permission.objects.get(codename='change_ticketdescription')
     ]
     create_group(group_name, permissions)
 

@@ -17,7 +17,8 @@
             <div class="col-sm-4">
               <div class="card">
                 <h3>{{ ticket.pk }}</h3>
-                <p><i class="fa fa-clock-o"></i>Fecha de creación: {{ ticket.created_at }} </p>
+                <p><i class="fa fa-clock-o"></i>&nbsp;Fecha de creación: {{ ticket.created_at }} </p>
+                <p><i class="fa fa-user"></i>&nbsp;{{ ticket.user.name }}</p>
                 <p>Status: {{ ticket.get_status_display }}</p>
 
               </div>

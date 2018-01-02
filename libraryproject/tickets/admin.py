@@ -9,6 +9,8 @@ class TicketDescriptionInline(admin.StackedInline):
         StackedInline def for the m2m
     '''
     model = TicketDescription
+    fields = ['book', 'quantity']
+    readonly_fields = ['book', 'quantity']
 
     def get_extra(self, request, obj=None, **kwargs):
         '''If the related model already exist, hide adding extra items '''
@@ -26,7 +28,8 @@ class TicketAdmin(admin.ModelAdmin):
     '''
     inlines = [TicketDescriptionInline]
     list_filter = ['status']
-    list_display = ['pk', 'user', ]
+    list_display = ['pk', 'user', 'status']
+    readonly_fields = ['user']
 
 
 admin.site.register(Ticket, TicketAdmin)

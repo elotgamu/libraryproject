@@ -15,6 +15,9 @@ body {
  * making all elements inheriting from the root box-sizing value
  * See: https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
  */
+p.no-mb {
+  margin-bottom: 0; }
+
 /**
  * Basic styles for links
  */
@@ -69,6 +72,12 @@ a {
 .full-wd {
   width: 100%; }
 
+.text-white {
+  color: #fff; }
+
+.bg-black {
+  background-color: #000; }
+
 .alert-debug {
   background-color: #fff;
   border-color: #d6e9c6;
@@ -111,6 +120,11 @@ a {
     margin-left: 0; }
   .nav.navbar-nav.pull-xs-right {
     float: none !important; } }
+
+.footer-legal {
+  padding: 10px 0; }
+  .footer-legal p {
+    color: #fff; }
 
 .btn-primary {
   background-color: #262626;

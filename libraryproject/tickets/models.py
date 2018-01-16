@@ -1,9 +1,9 @@
 from django.db import models
+from django.urls import reverse
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
 from model_utils import Choices
-# from django.urls import reverse
 
 from libraryproject.books.models import Book
 
@@ -15,6 +15,7 @@ class Ticket(models.Model):
         (0, 'submitted', _('Enviada')),
         (1, 'rejected', _('Rechazada')),
         (2, 'approved', _('Aprobada')),
+        (3, 'canceled', _('Cancelada')),
     )
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
@@ -35,8 +36,8 @@ class Ticket(models.Model):
     def __str__(self):
         return "%s" % (self.pk)
 
-    # def get_absolute_url(self):
-    #     return reverse('tickets:ticket-detail', kwargs={'pk': self.pk})
+    def get_absolute_url(self):
+        return reverse('tickets:ticket-detail', kwargs={'pk': self.pk})
 
 
 class TicketDescription(models.Model):

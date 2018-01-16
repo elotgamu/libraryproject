@@ -1,0 +1,23 @@
+<!-- form dinamically added via ajax request -->
+<form method="POST" action="{% url 'tickets:cancel-ticket' ticket.pk %}" class="js-ticket-cancel">
+  {% csrf_token %}
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+      <span class="sr-only">Close</span>
+    </button>
+    <h4 class="modal-title">Desea cancelar esta ticket de prestamo?</h4>
+  </div>
+
+  <div class="modal-body">
+    {# <p>One fine body&hellip;</p> #}
+    <h4>¿Esta seguro de cancelar ticket de prestamo #{{ ticket.pk }}?</h4>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+    <button type="submit" class="btn btn-primary ajax-cancel-ticket">Si</button>
+  </div>
+
+</form>
+<!-- end form -->

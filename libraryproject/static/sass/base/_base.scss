@@ -26,6 +26,12 @@ body {
 //   box-sizing: inherit;
 // }
 
+p {
+  &.no-mb {
+    margin-bottom: 0;
+  }
+}
+
 /**
  * Basic styles for links
  */

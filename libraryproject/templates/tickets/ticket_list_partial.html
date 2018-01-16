@@ -1,0 +1,39 @@
+{% if ticket_list %}
+  <div class="row">
+    <div class="col-sm-12">
+      <h2>Tickets en proceso:</h2>
+    </div><!-- end col sm 12 -->
+  </div><!-- end row -->
+
+  <div class="row">
+    {% for ticket in ticket_list  %}
+      <div class="col-sm-4">
+        <div class="card">
+          <h3>{{ ticket.pk }}</h3>
+          <p><i class="fa fa-clock-o"></i>&nbsp;Fecha de creación: {{ ticket.created_at }} </p>
+          <p><i class="fa fa-user"></i>&nbsp;{{ ticket.user.name }}</p>
+          <p>Status: {{ ticket.get_status_display }}</p>
+
+          <p class="no-mb">
+            <a href="{{ ticket.get_absolute_url }}">Ver detalles de la ticket</a>
+          </p>
+
+          {% if ticket.status == 0 %}
+            <p class="no-mb">
+              <a class="btn btn-danger js-cancel-ticket" data-target="#modal-cancel-user-ticket" data-toggle="modal" data-url="{% url 'tickets:cancel-ticket' ticket.pk %}">Cancelar Solicitud</a>
+            </p>
+          {% endif %}
+
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  <!-- end row -->
+
+  {% else %}
+    <div class="row">
+      <div class="col-sm-12">
+        <h4>No ha creado ninguna ticket de prestamo aun!</h4>
+      </div>
+     </div>
+{% endif %}

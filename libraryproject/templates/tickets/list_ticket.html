@@ -12,14 +12,16 @@
 
   </section>
 
-  <!-- the modal for ticket cancellation confirm -->
-      <div class="modal fade" id="modal-cancel-user-ticket">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
-  <!-- end the modal -->
-
 {% endblock content %}
+
+{% block modal %}
+<!-- the modal for ticket cancellation confirm -->
+  <div class="modal fade" id="modal-cancel-user-ticket">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+<!-- end the modal -->
+{% endblock modal %}

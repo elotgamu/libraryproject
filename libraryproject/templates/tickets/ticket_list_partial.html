@@ -20,7 +20,7 @@
 
           {% if ticket.status == 0 %}
             <p class="no-mb">
-              <a class="btn btn-danger js-cancel-ticket" data-target="#modal-cancel-user-ticket" data-toggle="modal" data-url="{% url 'tickets:cancel-ticket' ticket.pk %}">Cancelar Solicitud</a>
+              <a class="btn btn-danger js-cancel-ticket" v-on:click="get_cancel_content" data-target="#modal-cancel-user-ticket" data-toggle="modal" data-url="{% url 'tickets:cancel-ticket' ticket.pk %}">Cancelar Solicitud</a>
             </p>
           {% endif %}
 

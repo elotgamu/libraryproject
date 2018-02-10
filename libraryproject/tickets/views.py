@@ -9,6 +9,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.http import JsonResponse
 
+from django.core import serializers
+
 from django.template.loader import render_to_string
 
 from django.utils.decorators import method_decorator
@@ -63,6 +65,32 @@ class TicketList(LoginRequiredMixin, ListView):
     def get_queryset(self, **kwargs):
         self.tickets = Ticket.objects.filter(user=self.request.user)
         return self.tickets
+
+
+class TicketListApi(LoginRequiredMixin, ListView):
+    model = Ticket
+    template_name = "tickets/tickets_list_vue.html"
+    context_object_name = 'ticket_list'
+
+    def get_queryset(self, **kwargs):
+        queryset = Ticket.objects.filter(user=self.request.user)
+        tickets = serializers.serialize("json", queryset)
+        return tickets
+
+    def get(self, request, *args, **kwargs):
+
+        if request.GET.get('format') == 'json':
+            data = self.get_queryset()
+            return JsonResponse(data, status="200", safe=False)
+
+        else:
+            return super(TicketListApi, self).get(request, *args, **kwargs)
+
+
+class TicketDetailApi(DetailView):
+    model = Ticket
+    template_name = "tickets/ticket_details.html"
+    context_object_name = 'ticket'
 
 
 class TicketDetails(DetailView):

@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from .views import TicketCreate, TicketList, CancelTicketView, TicketDetails
+from .views import TicketCreate, TicketList, CancelTicketView, TicketDetails, TicketListApi, TicketDetailApi
 
 urlpatterns = [
     url(r'^$', TicketList.as_view(), name='ticket-list'),
@@ -9,4 +9,6 @@ urlpatterns = [
         name='cancel-ticket'),
     url(r'^detail/(?P<pk>\d+)/$', TicketDetails.as_view(),
         name='ticket-detail'),
+    url(r'^detail/(?P<pk>\d+)$', TicketDetailApi.as_view(), name='ticket-detail-api'),
+    url(r'^ticket-list/$', TicketListApi.as_view(), name='tickets-list-api'),
 ]

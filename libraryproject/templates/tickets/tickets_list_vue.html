@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section id="ticket-list">
+    <div class="container">
+      <div class="row" >
+        <div class="col-sm-4" v-for="ticket in tickets" :key="ticket.id">
+          <div class="card">
+            <h3>${ ticket.pk }</h3>
+            <p><i class="fa fa-clock-o"></i>&nbsp;Fecha de creación: ${ ticket.fields.created_at } </p>
+            <p><i class="fa fa-user"></i>&nbsp; {{ user.name }}</p>
+            <p>Status: ${ ticket.fields.status }</p>
+
+            <p class="no-mb">
+              <a :href="'/tickets/detail/' + ticket.pk">Ver detalles de la ticket</a>
+            </p>
+
+            <p v-show="ticket.fields.status == 0" class="no-mb">
+              <a class="btn btn-danger" v-on:click="loadData(ticket)">Cancelar esta solicitud</a>
+            </p>
+
+
+          </div><!-- end card -->
+
+
+        </div><!-- end col -->
+      </div><!-- end row -->
+    </div><!-- end container -->
+
+    <modal v-if="showModal" v-on:close="closeModal" :ticket="modalData" @close="showModal = false">
+
+  </section>
+
+
+{% endblock content %}
+
+
+{% block modal %}
+  <!-- the modal component -->
+  <script type="text/x-template" id="modal-component">
+    <transition name="modal">
+      <div class="modal-mask">
+        <div class="modal-wrapper">
+          <div class="modal-container">
+
+            <div class="modal-header">
+              <button type="button" class="close" @click="$emit('close')" aria-hidden="true">&times;</button>
+            </div>
+
+            <div class="modal-body">
+              <h4>Desea cancelar la ticket # ${ ticket.pk }</h4>
+            </div>
+
+            <div class="modal-footer">
+
+                <button class="btn btn-secondary" @click="$emit('close')">
+                  Cerrar
+                </button>
+                <button class="btn btn-danger" @click="$emit('close')">
+                  Cancelar Ticket
+                </button>
+            </div>
+
+          </div>
+        </div><!-- end modal wrapper -->
+      </div><!-- end mask -->
+    </transition><!-- end transition -->
+  </script>
+  <!-- end the modal component -->
+{% endblock modal %}
+
+{% block javascript %}
+  {{ block.super }}
+
+  <!-- the VueJS -->
+  <script src="https://unpkg.com/vue"></script>
+
+  <script type="text/javascript">
+    // Vue.config.delimiters = ['${', '}'];
+
+    Vue.component('modal', {
+      delimiters: ['${', '}'],
+      template: '#modal-component',
+      props: ['ticket'],
+      data: function () {
+        return {
+          message: ''
+        }
+      },
+      created: function () {
+        //do something after creating vue instance
+        console.log(this.ticket.pk);
+      },
+      methods: {
+        close: function () {
+          this.$emit('closeModal');
+        },
+        postCancel: function () {
+          this.close();
+        }
+      }
+    });
+
+    var vm = new Vue({
+      delimiters: ['${', '}'],
+      el: '#ticket-list',
+      data: {
+        message: '',
+        tickets: [],
+        showModal: false,
+        modalData: ''
+      },
+      // components: {
+      //   'cancel-ticket': CancelTicket
+      // },
+      created: function () {
+        this.initialData();
+      },
+      methods: {
+        initialData: function () {
+          let parsedJson = JSON.parse("{{ ticket_list|escapejs }}");
+          this.tickets = parsedJson;
+        },
+        closeModal: function () {
+          this.showModal = false;
+          this.modalData = '';
+        },
+        openModal: function () {
+          // $(document.body).addClass('modal-open');
+          this.showModal = true;
+        },
+        loadData: function (ticket) {
+          var ticketInfo = ticket;
+          this.modalData = ticketInfo;
+          this.openModal();
+        }
+      }
+    });
+
+  </script>
+{% endblock javascript %}
